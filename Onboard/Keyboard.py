@@ -246,7 +246,14 @@ class KeySynthVirtkey(KeySynth):
         Send key presses for all characters in a unicode string.
         """
         keystr = keystr.replace("\\n", "\n")  # for new lines in snippets
-
+        if keystr.startswith("http"):
+            subprocess.Popen(["xdg-open",keystr])
+            return
+        
+        if keystr.startswith("`"):
+            subprocess.Popen(keystr[1:])
+            return
+        
         if self._vk:   # may be None in the last call before exiting
             for ch in keystr:
                 if ch == "\b":   # backspace?
