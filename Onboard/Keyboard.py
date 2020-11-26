@@ -31,7 +31,6 @@ from contextlib import contextmanager
 from gi.repository import Gdk, GLib
 
 import logging
-
 _logger = logging.getLogger(__name__)
 
 from Onboard.Version import require_gi_versions
@@ -59,7 +58,6 @@ from Onboard.WordSuggestions       import WordSuggestions
 from Onboard.canonical_equivalents import canonical_equivalents
 
 import Onboard.osk as osk
-import subprocess
 
 try:
     from Onboard.utils import run_script, get_keysym_from_name, dictproperty
@@ -247,12 +245,16 @@ class KeySynthVirtkey(KeySynth):
         """
         Send key presses for all characters in a unicode string.
         """
+        import shlex, subprocess
         keystr = keystr.replace("\\n", "\n")  # for new lines in snippets
+        
         if keystr.startswith("http"):
+            print("detected website")
             subprocess.Popen(["xdg-open",keystr])
             return
         
         if keystr.startswith("`"):
+            print("detected application")
             subprocess.Popen(keystr[1:])
             return
         
