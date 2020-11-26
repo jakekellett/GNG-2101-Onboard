@@ -1593,7 +1593,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
             # Title of the snippets dialog for new snippets
             title = _("New snippet")
             # Message in the snippets dialog for new snippets
-            message = _format("Enter a new snippet for button #{}:", snippet_id)
+            message = _format("Enter an App name, a URL or save a sentence", snippet_id)
 
         # turn off AT-SPI listeners to prevent D-BUS deadlocks (Quantal).
         self.keyboard.on_focusable_gui_opening()
@@ -1605,6 +1605,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         # be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
         dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         dialog.add_button(_("_Save snippet"), Gtk.ResponseType.OK)
+        dialog.add_button(_("_Add an app"),Gtk.ResponseType.YES)
 
         # Don't hide dialog behind the keyboard in force-to-top mode.
         if config.is_force_to_top():
@@ -1658,9 +1659,11 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
     def _on_snippet_dialog_response(self, dialog, response, snippet_id, \
                                     label_entry, text_entry):
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.OK or response == Gtk.ResponseType.YES:
             label = label_entry.get_text()
             text = text_entry.get_text()
+            if response == Gtk.ResponseType.YES:
+              text = "`" + text
 
             if sys.version_info.major == 2:
                 label = label.decode("utf-8")
