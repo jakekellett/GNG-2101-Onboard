@@ -31,6 +31,7 @@ from contextlib import contextmanager
 from gi.repository import Gdk, GLib
 
 import logging
+import subprocess
 _logger = logging.getLogger(__name__)
 
 from Onboard.Version import require_gi_versions
