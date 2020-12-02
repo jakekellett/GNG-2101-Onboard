@@ -1664,10 +1664,11 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
             label = label_entry.get_text()
             text = text_entry.get_text()
             if response == Gtk.ResponseType.YES:
-              text = "`" + text
+                if(!(text.startswith(`))):
+                    text = "`" + text
             if response == Gtk.ResponseType.NO:
-              if(!(text.startswith(http))):
-                text = "https://" + text
+                if(!(text.startswith(http))):
+                    text = "https://" + text
 
             if sys.version_info.major == 2:
                 label = label.decode("utf-8")
