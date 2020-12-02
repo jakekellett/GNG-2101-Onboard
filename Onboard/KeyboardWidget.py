@@ -1606,7 +1606,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         dialog.add_button(_("_Save snippet"), Gtk.ResponseType.OK)
         dialog.add_button(_("_Add an app"),Gtk.ResponseType.YES)
-        dialog.add_button(_(_"Add a Webpage"),Gtk.ResponseType.NO)
+        dialog.add_button(_("_Add a Webpage"),Gtk.ResponseType.NO)
 
         # Don't hide dialog behind the keyboard in force-to-top mode.
         if config.is_force_to_top():
