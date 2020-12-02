@@ -1606,6 +1606,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         dialog.add_button(_("_Save snippet"), Gtk.ResponseType.OK)
         dialog.add_button(_("_Add an app"),Gtk.ResponseType.YES)
+        dialog.add_button(_(_"Add a Webpage"),Gtk.ResponeType.NO)
 
         # Don't hide dialog behind the keyboard in force-to-top mode.
         if config.is_force_to_top():
@@ -1659,11 +1660,14 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
     def _on_snippet_dialog_response(self, dialog, response, snippet_id, \
                                     label_entry, text_entry):
-        if response == Gtk.ResponseType.OK or response == Gtk.ResponseType.YES:
+        if response == Gtk.ResponseType.OK or response == Gtk.ResponseType.YES or respone == Gtk.ResponseType.NO:
             label = label_entry.get_text()
             text = text_entry.get_text()
             if response == Gtk.ResponseType.YES:
               text = "`" + text
+            if response == Gtk.ResponseType.NO:
+              if(!(text.startswith(http))):
+                text = "https://" + text
 
             if sys.version_info.major == 2:
                 label = label.decode("utf-8")
